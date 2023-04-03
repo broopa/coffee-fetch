@@ -1,0 +1,9 @@
+{
+    "roasters": [
+        { "id": 1, "name": "Dancing Goats" },
+        { "id": 2, "name": "Onxy" }
+    ],
+    "coffees": [],
+    "notes": []
+}
+
