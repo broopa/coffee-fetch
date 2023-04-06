@@ -1,9 +1,22 @@
 {
-    "roasters": [
-        { "id": 1, "name": "Dancing Goats" },
-        { "id": 2, "name": "Onxy" }
-    ],
-    "coffees": [],
-    "notes": []
+  "roasters": [
+    {
+      "id": 2,
+      "name": "Onxy"
+    },
+    {
+      "name": "Miss Constance Schuppe",
+      "id": 5
+    },
+    {
+      "name": "Noah Bins I",
+      "id": 7
+    },
+    {
+      "name": "Angie McClure",
+      "id": 12
+    }
+  ],
+  "coffees": [],
+  "notes": []
 }
-

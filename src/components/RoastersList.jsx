@@ -1,37 +1,47 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchRoasters } from "../store";
+import { useSelector } from "react-redux";
+import { fetchRoasters, addRoaster } from "../store";
+import { useThunk } from "../hooks/useThunk";
 import Skeleton from "./Loader";
+import Button from "./Button";
+import RoastersListItem from "./RoastersListItem";
+
 
 function RoastersList() {
-    const dispatch = useDispatch();
-    const { isLoading, data, error } = useSelector((state) => {
+    const [doFetchRoasters, isLoadingRoasters, loadingRoastersError] = useThunk(fetchRoasters)
+    const [doCreateRoaster, isCreatingRoaster, creatingRoasterError] = useThunk(addRoaster)
+    const { data } = useSelector((state) => {
         return state.roasters;
     });
 
     useEffect(() => {
-        dispatch(fetchRoasters());
-    }, [dispatch]);
+        doFetchRoasters();
+    }, []);
 
-    if (isLoading) {
-        return <Skeleton times={6} className="h-10 w-full" />;
+    const handleUserRoaster = () => {
+        doCreateRoaster();
+    };
+
+    let content; 
+    if (isLoadingRoasters) {
+        content = <Skeleton times={RoastersList.length} className="h-10 w-full" />;
+      } else if (loadingRoastersError) {
+        content = <div>Error fetching data...</div>;
+      } else {
+        content = data.map((roaster) => {
+            return <RoastersListItem key={roaster.id} roaster={roaster} />
+        });
       }
-    
-      if (error) {
-        return <div>Error fetching data...</div>;
-      }
-    
-      const renderedRoasters = data.map((roaster) => {
-        return (
-          <div key={roaster.id} className="mb-2 border rounded">
-            <div className="flex p-2 justify-between items-center cursor-pointer">
-              {roaster.name}
+
+      return <div>
+        <div className=" flex flex-row justify-between items-center m-3">
+            <h1 className="m-2 text-xl">Roasters</h1>
+            <Button loading={isCreatingRoaster} onClick={handleUserRoaster}>
+                + Add Roaster
+            </Button>
             </div>
-          </div>
-        );
-      });
-    
-      return <div>{renderedRoasters}</div>;
+            {content}
+        </div>;
 }
 
 export default RoastersList;

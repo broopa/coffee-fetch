@@ -9,3 +9,5 @@ export const store = configureStore({
 });
 
 export * from './thunks/fetchRoasters';
+export * from './thunks/addRoaster';
+export * from './thunks/removeRoaster';
